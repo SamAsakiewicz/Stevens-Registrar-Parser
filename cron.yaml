@@ -1,0 +1,5 @@
+cron:
+- description: datastore update
+  url: /scripts/update
+  schedule: every 24 hours
+  target: version-1
