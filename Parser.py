@@ -11,8 +11,8 @@ class RegistrarUrlBuilder:
     """builds urls to the registrar course listing to feed to the parser"""
     
     def __init__(self):
-        self.year_options = ("05", "06", "07", "08", "09", "10", "11", "12", "13")
-        self.semester_options = ('A', 'B', 'F', 'S', 'W')
+        self.year_options = ("05", "06", "07", "08", "09", "10", "11", "12", "13", "14")
+        self.semester_options = ('W', 'S', 'A', 'B', 'F')
     
         self.root_url = "http://www.stevens.edu/sit/registrar/course-search?schedule-query="
         self.search_year = "&year=20" # + 05, 06, 07, 08, 09, 10, 11, 12, 13
@@ -29,7 +29,7 @@ class RegistrarUrlBuilder:
         return urls
     
     def get_url_current_semester(self):
-        return self._build_url("13", 'F')
+        return self._build_url("14", 'S')
     
     def get_urls_current_year(self):
         urls = list()

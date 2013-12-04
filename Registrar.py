@@ -19,6 +19,7 @@ class Course:
         self.semester = self.dict.get("semester")    
         self.call_number = int(self.dict.get("call#"))
         self.identifier = self.dict.get("section")
+        self.course_ident = ""
         self.name = self.dict.get("title")
         self.max = int(self.dict.get("max"))
         self.current = int(self.dict.get("curr"))
@@ -35,6 +36,7 @@ class Course:
         
     def process_section(self):
         s = re.findall("[A-Za-z]+", self.identifier)
+        self.course_ident = re.findall("[A-Za-z]+\s[0-9]+", self.identifier)[0]
 
         if len(s) >= 1:
             self.dept = s[0]
@@ -48,7 +50,7 @@ class Course:
                     self.recitation = True
                 if s[1][0] == "L":
                     self.lab = True
-
+                    
     def get_dict(self):
         return self.dict
     
@@ -65,7 +67,7 @@ class Course:
         m.update(str(self.status))
         m.update(str(self.instructor_1))
         m.update(str(self.instructor_2))
-        return m.digest()
+        return m.hexdigest()
     
     def __str__(self):
         return str(self.dict)

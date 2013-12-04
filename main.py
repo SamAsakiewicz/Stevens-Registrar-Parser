@@ -1,40 +1,26 @@
 import Parser
 import Datastore
 import webapp2
-
-def update_current_semester(): 
-    url_builder = Parser.RegistrarUrlBuilder()
-    url =  url_builder.get_url_current_semester()  
-
-    parser = Parser.RegistrarParser()
-    parser.feedUrl(url)
-
-    courses = parser.get_course_list()
-    Datastore.update_courses(courses)
-    
-def update_all_semesters(): 
-    url_builder = Parser.RegistrarUrlBuilder()
-    urls_tupple =  url_builder.get_urls_all_semesters()  
-
-    for url, year, semester in urls_tupple:
-        parser = Parser.RegistrarParser()
-        parser.year = year
-        parser.semester = semester
-        parser.feedUrl(url)
-    
-        courses = parser.get_course_list()
-        Datastore.update_courses(courses)
+import script
+import datetime
 
 class DatastoreUpdate(webapp2.RequestHandler):
     def get(self):
-        self.response.headers['Content-Type'] = 'text/plain'
-        self.response.write('starting parse')
+        #self.response.headers['Content-Type'] = 'text/plain'
+        #self.response.write('starting parse')
         
-        #Datastore.delete_all()
-        #update_current_semester()
-        update_all_semesters()
-        
-
+        day = datetime.datetime.today().weekday()
+        if (day == 2) or (day == 4):
+            script.update_current_semester()
+            script.update_current_year()
+        if day == 3:
+            try:
+                Datastore.delete_aggr()
+            except:
+                pass
+            script.update_aggregates(1)
+        if day == 5:
+            script.update_aggregates(2)
         
 application = webapp2.WSGIApplication([
     ('/scripts/update', DatastoreUpdate),

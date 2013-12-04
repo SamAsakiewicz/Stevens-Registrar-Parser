@@ -1,12 +1,12 @@
 application: cpe640-registrar-project 
-version: 2
+version: 1
 runtime: python27
 api_version: 1
 threadsafe: yes
 
 handlers:
-- url: /.*
-  script: main.application
+#- url: /.*
+#  script: main.application
 
 - url: /scripts/update
   script: main.application

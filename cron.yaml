@@ -1,5 +1,5 @@
 cron:
 - description: datastore update
   url: /scripts/update
-  schedule: every 24 hours
+  schedule: 1 of jan 00:00
   target: version-1
